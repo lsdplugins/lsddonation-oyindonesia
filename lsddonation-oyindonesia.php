@@ -6,7 +6,7 @@
  * Plugin Name:       LSDDonasi - OY Indonesia
  * Plugin URI:        https://lsdplugins.com/product/lsddonasi-oyindonesia
  * Description:       Ekstensi OYIndonesia untuk LSDDonasi | Indonesia
- * Version:           1.0.5
+ * Version:           1.0.0
  * Author:            LSD Plugins
  * Author URI:        https://lsdplugins.com/lsddonasi-oyindonesia/
  * License:           GPL-3.0+
@@ -18,13 +18,11 @@
  */
 
 // If this file is accessed directory, then abort.
-if (!defined('ABSPATH')) {
-    exit;
-}
+if (!defined('ABSPATH')) exit;
 
 // Define Constant
-defined('LSDD_OYINDONESIA_REQUIRED') or define('LSDD_OYINDONESIA_REQUIRED', '4.0.5');
-defined('LSDD_OYINDONESIA_VERSION') or define('LSDD_OYINDONESIA_VERSION', '1.0.5');
+defined('LSDD_OYINDONESIA_REQUIRED') or define('LSDD_OYINDONESIA_REQUIRED', '4.1.0');
+defined('LSDD_OYINDONESIA_VERSION') or define('LSDD_OYINDONESIA_VERSION', '1.0.0');
 defined('LSDD_OYINDONESIA_BASE') or define('LSDD_OYINDONESIA_BASE', plugin_basename(__FILE__));
 defined('LSDD_OYINDONESIA_PATH') or define('LSDD_OYINDONESIA_PATH', plugin_dir_path(__FILE__));
 defined('LSDD_OYINDONESIA_URL') or define('LSDD_OYINDONESIA_URL', plugin_dir_url(__FILE__));
@@ -76,7 +74,6 @@ add_action('admin_init', 'lsdd_oyindonesia_dependency');
 $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 if (in_array('lsddonation/lsddonation.php', $active_plugins)) {
     require_once LSDD_OYINDONESIA_PATH . 'includes/plugin.php';
-    \LSDDonation\OYIndonesia\Plugin::load();
 }
 
 /**

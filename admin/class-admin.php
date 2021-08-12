@@ -2,9 +2,7 @@
 
 namespace LSDDonation\OYIndonesia;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
+if (!defined('ABSPATH')) exit;
 
 /**
  * Settings class.
@@ -31,36 +29,6 @@ class Admin
      * @var string
      */
     private $version;
-
-    /**
-     * Cloning is forbidden.
-     *
-     * @since 1.0.0
-     */
-    public function __clone()
-    {
-        _doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LSDD_OYINDONESIA_VERSION);
-    }
-
-    /**
-     * Unserializing instances of this class is forbidden.
-     *
-     * @since 1.0.0
-     */
-
-    public function __wakeup()
-    {
-        _doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LSDD_OYINDONESIA_VERSION);
-    }
-
-    /**
-     * Constructor function.
-     *
-     * @param object $parent Parent object.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Registering OYIndonesia Admin
@@ -111,13 +79,8 @@ class Admin
             if (!version_compare($core_plugin['Version'], LSDD_OYINDONESIA_REQUIRED, '>=')) {
                 add_action('admin_notices', 'lsdd_oyindonesia_fail_version');
                 $core_version = false;
-            } else {
-                delete_option('oyindonesia_activator_redirect');
-                exit(wp_redirect(admin_url('admin.php?page=lsddonation&tab=licenses')));
             }
         }
-
-        require_once 'class-updater.php';
     }
 
     /**
@@ -136,5 +99,26 @@ class Admin
      */
     public function enqueue_scripts()
     {
+    }
+    
+    /**
+     * Cloning is forbidden.
+     *
+     * @since 1.0.0
+     */
+    public function __clone()
+    {
+        _doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LSDD_OYINDONESIA_VERSION);
+    }
+
+    /**
+     * Unserializing instances of this class is forbidden.
+     *
+     * @since 1.0.0
+     */
+
+    public function __wakeup()
+    {
+        _doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LSDD_OYINDONESIA_VERSION);
     }
 }

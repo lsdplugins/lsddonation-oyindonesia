@@ -1,30 +1,27 @@
 <?php
 
-use LSDDonation\Licenses;
 use LSDDonation\Payments;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
+if (!defined('ABSPATH')) exit;
 
-if (!class_exists('OYIndonesia')) {
+if (!class_exists('OYIndonesia_VA') && class_exists('LSDDonation\Payments\Payment_Template_Method')) {
 
-    class OYIndonesia extends Payments\Payment_Template_Method
+    class OYIndonesia_VA extends Payments\Payment_Template_Method
     {
-        public $id = 'oyindonesia';
+        public $id = 'oyindonesia_va';
 
-        public $country = 'global';
+        public $country = 'ID';
 
-        public $js_listener = 'lsdd-oyindonesia-payment';
+        public $js_listener = 'lsdd-oyindonesia-payment'; // Hook For Javascript After Click Complete Payment Button
 
         // Direct Notification
         public $notification = true;
 
         public function __construct()
         {
-            $this->default_settings();
+            $this->setup();
 
-            // $this->reset_settings();
+            // $this->setdown();
 
             // Inject Thankyou Instruction based on Payment
             add_action("lsddonation/confirmation/instruction", [$this, 'instruction'], 10, 2);
@@ -35,22 +32,25 @@ if (!class_exists('OYIndonesia')) {
          *
          * @return void
          */
-        private function default_settings()
+        private function setup()
         {
+
             $payment_data = get_option('lsdd_payment_settings');
             if (!isset($payment_data[$this->id]) || $payment_data[$this->id] == null) { // Empty and Not Isset
 
                 $payment_data[$this->id] = array(
-                    'name' => 'OYIndonesia',
-                    'description' => 'Bayar melalui VA, GoPay, Alfamart dan Indomaret',
-                    'logo' => LSDD_OYINDONESIA_URL . 'assets/images/oyindonesia.png',
+                    'name' => 'OY Indonesia - VA ',
+                    'description' => 'Bayar melalui VA',
+                    'logo' => LSDD_OYINDONESIA_URL . 'admin/images/oyindonesia.png',
                     'group' => 'payment_gateway',
                     'group_name' => 'Payment Gateway',
-                    'template_class' => 'OYIndonesia',
-                    'production' => 'off',
-                    'apikey' => '',
+                    'template_class' => 'OYIndonesia_VA',
                     'instruction' => __('Silahkan cek email anda untuk melihat instruksi pembayaran', 'lsddonation-oyindonesia'),
                     'confirmation' => self::AUTOMATIC,
+                    // Options
+                    'production' => 'off',
+                    'apikey' => '',
+
                     "excluded_fields" => [],
                     "required_fields" => ['lsdd_form_name', 'lsdd_form_phone', 'lsdd_form_email']
                 );
@@ -64,13 +64,13 @@ if (!class_exists('OYIndonesia')) {
          * @param array $options
          * @return void
          */
-        private function reset_settings()
+        private function setdown()
         {
             $options = get_option('lsdd_payment_settings');
             if (isset($options[$this->id])) {
                 unset($options[$this->id]);
                 update_option('lsdd_payment_settings', $options);
-                $this->default_settings();
+                $this->setup();
             }
         }
 
@@ -87,7 +87,7 @@ if (!class_exists('OYIndonesia')) {
 
             <div id="<?php echo $payment_id; ?>_content" class="payment-editor d-hide">
                 <div class="panel-header text-center">
-                    <div class="panel-title h5 mt-10 float-left"><?php _e('Edit OYIndonesia', 'lsddonation-oyindonesia'); ?></div>
+                    <div class="panel-title h5 mt-10 float-left"><?php _e('Edit OYIndonesia_VA', 'lsddonation-oyindonesia'); ?></div>
                     <div class="panel-close float-right"><i class="icon icon-cross"></i></div>
                 </div>
 
@@ -119,7 +119,7 @@ if (!class_exists('OYIndonesia')) {
                             <?php endif; ?>
                         </div>
 
-                        <div class="divider text-center" style="margin-top:25px;" data-content="OYIndonesia Credentials"></div>
+                        <div class="divider text-center" style="margin-top:25px;" data-content="OYIndonesia_VA Credentials"></div>
 
                         <div class="form-group">
                             <label class="form-label" for="apikey"><?php _e('API Key', 'lsddonation-oyindonesia'); ?></label>
@@ -176,8 +176,9 @@ if (!class_exists('OYIndonesia')) {
          * @param array $report
          * @return void
          */
-        public function instruction(int $report_id, $report)
+        public function instruction(int $report_id,  $report)
         {
+            $report = (object) $report;
             $gateway = $report->gateway;
 
             if ($gateway == $this->id) :
@@ -198,7 +199,6 @@ if (!class_exists('OYIndonesia')) {
                 </div>
 
 <?php
-
                 // instruction
                 echo esc_attr($settings['instruction']);
             endif;
@@ -234,8 +234,6 @@ if (!class_exists('OYIndonesia')) {
         }
     }
 
-    if (Licenses::get('key', 'lsddonation-oyindonesia')) :
-        Payments\Payment_Registrar::register("oyindonesia", new OYIndonesia());
-    endif;
+    Payments\Payment_Registrar::register("oyindonesia_va", new OYIndonesia_VA());
 }
 ?>
