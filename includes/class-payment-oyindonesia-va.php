@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Create Payment Method for Admin and User Interface
+ * Manage payment settings and more
+ */
+
 use LSDDonation\Payments;
 
 if (!defined('ABSPATH')) exit;

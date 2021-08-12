@@ -1,8 +1,7 @@
 <?php
 
 /**
- * @LSDDonation Extension
- * 
+ * @lsddonation extension
  * Plugin Name:       LSDDonasi - OY Indonesia
  * Plugin URI:        https://lsdplugins.com/product/lsddonasi-oyindonesia
  * Description:       Ekstensi OYIndonesia untuk LSDDonasi | Indonesia

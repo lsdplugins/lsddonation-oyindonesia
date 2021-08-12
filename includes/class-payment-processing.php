@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Handling Notification from Gateway
- * Automatic Confirmation
+ * Processing Payment
+ * Request to Payment API
  */
 
 use LSDDonation\DB;

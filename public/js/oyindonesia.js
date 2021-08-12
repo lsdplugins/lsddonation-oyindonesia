@@ -1,4 +1,4 @@
-// TODO :: Adding nonce to Verify Trigger Listener
+// Callback when payment completed
 document.addEventListener('lsdd-oyindonesia-payment', function (e) {
 
 	alert("OY");

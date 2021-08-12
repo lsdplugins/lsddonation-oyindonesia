@@ -2,8 +2,9 @@
 
 namespace LSDDonation\OYIndonesia;
 
-use LSDDonation\DB;
+if (!defined('ABSPATH')) exit;
 
+use LSDDonation\DB;
 class Plugin
 {
     /**

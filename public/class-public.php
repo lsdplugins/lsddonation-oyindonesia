@@ -2,10 +2,7 @@
 
 namespace LSDDonation\OYIndonesia;
 
-
-
 if (!defined('ABSPATH')) exit;
-
 class Frontend
 {
     /**

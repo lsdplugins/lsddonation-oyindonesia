@@ -1,7 +1,7 @@
 <?php
 /**
- * Handling Notification from Gateway
- * Automatic Confirmation
+ * Handling Notification from Gateway via Webhook
+ * Automatic Confirmation Passive
  */
 use LSDDonation\DB;
 
